@@ -1,0 +1,122 @@
+# Creating a new database 'test_environment'
+
+mysql> CREATE DATABASE test_environment;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| test               |
+| test_environment   |
+| testing_anand      |
++--------------------+
+6 rows in set (0.06 sec)
+
+# Selecting database 'test_environment'
+mysql> USE test_environment
+Database changed
+
+# creating a table named 'testing_table' with below fields -  
+ name(string)
+ contact_name(string)
+ roll_no(string)
+
+mysql> CREATE TABLE testing_table
+    -> (
+    -> Name varchar(255),
+    -> Contact_Name varchar(255),
+    -> Roll_no varchar(255)
+    -> )
+    -> ;
+Query OK, 0 rows affected (0.84 sec)
+
+mysql> DESC testing_table;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| Name         | varchar(255) | YES  |     | NULL    |       |
+| Contact_Name | varchar(255) | YES  |     | NULL    |       |
+| Roll_no      | varchar(255) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+3 rows in set (0.09 sec)
+
+
+# Delete column 'Name'
+
+mysql> ALTER TABLE testing_table
+    -> DROP COLUMN Name
+    -> ;
+Query OK, 0 rows affected (0.72 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC testing_table;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| Contact_Name | varchar(255) | YES  |     | NULL    |       |
+| Roll_no      | varchar(255) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+# Rename Contact_name to username
+
+mysql> ALTER TABLE testing_table
+    -> CHANGE Contact_name Username varchar(255)
+    -> ;
+Query OK, 0 rows affected (0.14 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+mysql> DESC testing_table;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| Username | varchar(255) | YES  |     | NULL    |       |
+| Roll_no  | varchar(255) | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+# Add 2 fields first_name, last_name to Table 
+
+mysql> ALTER TABLE testing_table
+    -> ADD (First_name varchar(255), Last_name varchar(255));
+Query OK, 0 rows affected (0.50 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC testing_table;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| Username   | varchar(255) | YES  |     | NULL    |       |
+| Roll_no    | varchar(255) | YES  |     | NULL    |       |
+| First_name | varchar(255) | YES  |     | NULL    |       |
+| Last_name  | varchar(255) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+# Change the type of roll_no to integer
+
+mysql> ALTER TABLE testing_table
+    -> MODIFY Roll_no int
+    -> ;
+Query OK, 0 rows affected (0.81 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+mysql> DESC testing_table;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| Username   | varchar(255) | YES  |     | NULL    |       |
+| Roll_no    | int(11)      | YES  |     | NULL    |       |
+| First_name | varchar(255) | YES  |     | NULL    |       |
+| Last_name  | varchar(255) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
