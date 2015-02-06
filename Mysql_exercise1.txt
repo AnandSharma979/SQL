@@ -1,0 +1,342 @@
+# Creating a table Branch with 3 columns BCode, Librarian & Address
+
+mysql> CREATE TABLE Branch
+    -> (
+    -> BCode VARCHAR(255),
+    -> Librarian VARCHAR(255),
+    -> Address VARCHAR(255)
+    -> );
+Query OK, 0 rows affected (0.35 sec)
+
+# Insert values into Table Branch
+
+mysql> INSERT INTO Branch
+    -> (BCode,Librarian,Address)
+    -> VALUES('B1','John Smith','2 Anglesea rd'),
+    -> ('B2','Mary Jones','34 Pearse St'),
+    -> ('B3','Francis Owens','Grange X');
+Query OK, 3 rows affected (0.12 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+
+mysql> SELECT * FROM Branch;
++-------+---------------+---------------+
+| BCode | Librarian     | Address       |
++-------+---------------+---------------+
+| B1    | John Smith    | 2 Anglesea rd |
+| B2    | Mary Jones    | 34 Pearse St  |
+| B3    | Francis Owens | Grange X      |
++-------+---------------+---------------+
+3 rows in set (0.03 sec)
+
+# Creating  table Titles with 3 columns Title, Author & Publisher
+
+
+mysql> CREATE TABLE Titles
+    -> (Title VARCHAR(255),Author VARCHAR(255),Publisher VARCHAR(255));
+Query OK, 0 rows affected (0.29 sec)
+
+mysql> DESC Titles;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| Title     | varchar(255) | YES  |     | NULL    |       |
+| Author    | varchar(255) | YES  |     | NULL    |       |
+| Publisher | varchar(255) | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+# Insert values in table Titles
+
+mysql> INSERT INTO Titles
+    ->      (Title,Author,Publisher)
+    ->      VALUES('Susannah','Ann Brown','Macmillan'),
+    ->      ('How to Fish','Amy Fly','Stop Press'),
+    ->      ('A History of Dublin','David Little','Wiley'),
+    ->      ('Computers','Blaise Pascal','Applewoods'),
+    ->      ('The Wife','Ann Brown','Macmillan');
+Query OK, 5 rows affected (0.09 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+
+
+mysql> SELECT * FROM Titles;
++---------------------+---------------+------------+
+| Title               | Author        | Publisher  |
++---------------------+---------------+------------+
+| Susannah            | Ann Brown     | Macmillan  |
+| How to Fish         | Amy Fly       | Stop Press |
+| A History of Dublin | David Little  | Wiley      |
+| Computers           | Blaise Pascal | Applewoods |
+| The Wife            | Ann Brown     | Macmillan  |
++---------------------+---------------+------------+
+5 rows in set (0.00 sec)
+
+
+# Creating table Holdings with 3 columns Branch,Title & #Copies
+
+mysql>  CREATE TABLE Holdings
+    ->  (Branch VARCHAR(255),Title VARCHAR(255),`#copies` VARCHAR(255));
+Query OK, 0 rows affected (0.34 sec)
+
+mysql>  CREATE TABLE Holdings
+    ->  (Branch VARCHAR(255),Title VARCHAR(255),`#copies` VARCHAR(255));
+Query OK, 0 rows affected (0.34 sec)
+
+
+# Insert values in Holdings branch
+
+mysql> Insert into Holdings
+    -> (Branch,Title,`#copies`)
+    -> VALUES('B1','Susannah',3),('B1','How to Fish',2),('B1','A History of Dublin',1),('B2','How to Fish',4),('B2','Computers',2),
+    -> ('B2','The Wife',3),('B3','A History of Dublin',1),('B3','Computers',4),('B3','Susannah',3),('B3','The Wife',1);
+Query OK, 10 rows affected (0.17 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+
+mysql> SELECT * FROM Holdings;
++--------+---------------------+---------+
+| Branch | Title               | #copies |
++--------+---------------------+---------+
+| B1     | Susannah            | 3       |
+| B1     | How to Fish         | 2       |
+| B1     | A History of Dublin | 1       |
+| B2     | How to Fish         | 4       |
+| B2     | Computers           | 2       |
+| B2     | The Wife            | 3       |
+| B3     | A History of Dublin | 1       |
+| B3     | Computers           | 4       |
+| B3     | Susannah            | 3       |
+| B3     | The Wife            | 1       |
++--------+---------------------+---------+
+10 rows in set (0.00 sec)
+
+
+(i) The names of all library books published by Macmillan
+
+mysql> SELECT Title FROM Titles WHERE Publisher='Macmillan';
++----------+
+| Title    |
++----------+
+| Susannah |
+| The Wife |
++----------+
+2 rows in set (0.10 sec)
+
+
+
+(ii) Branches that holds any book by Ann brown ( using a nested subquery )
+
+mysql> SELECT DISTINCT Branch FROM Holdings WHERE Title IN( SELECT Title FROM Titles WHERE Author='Ann Brown');
++--------+
+| Branch |
++--------+
+| B1     |
+| B2     |
+| B3     |
++--------+
+3 rows in set (0.07 sec)
+
+(iii) Branches that holds any book by Ann brown ( without using a nested subquery )
+
+mysql> SELECT DISTINCT Branch FROM Holdings
+   -> INNER JOIN Titles
+   -> ON Author='Ann Brown';
+--------+
+ Branch |
+--------+
+ B1     |
+ B2     |
+ B3     |
+--------+
+ rows in set (0.00 sec)
+
+(iv) The total no of books held at each branch
+
+mysql> SELECT SUM(`#copies`) AS Books FROM Holdings;
++-------+
+| Books |
++-------+
+|    24 |
++-------+
+1 row in set (0.00 sec)
+
+# Creating Table Tastes with 2 columns Name & Filling
+
+mysql> CREATE Table Tastes
+   -> (NAME VARCHAR(255),FILLING VARCHAR(255));
+Query OK, 0 rows affected (0.36 sec)
+
+# Insert values in Tastes
+
+mysql> INSERT INTO Tastes
+   -> VALUES('Brown','Turkey'),('Brown','Beef'),('Brown','Ham'),('Jones','Cheese'),('Green','Beef'),('Green','Turkey'),('Green','Cheese');
+Query OK, 7 rows affected (0.07 sec)
+ecords: 7  Duplicates: 0  Warnings: 0
+
+# Creating table LOCATIONS with 3 columns LNAME, PHONE & ADDRESS
+
+mysql> CREATE Table LOCATIONS
+    -> (LNAME VARCHAR(255),PHONE VARCHAR(255),ADDRESS VARCHAR(255));
+Query OK, 0 rows affected (0.44 sec)
+
+# Insert values in LOCATIONS 
+
+ mysql>  INSERT INTO LOCATIONS
+   ->  VALUES('Lincoln','6834523','Lincoln Place'),("O'Neill's",'6742134','Pearse St'),('Old Nag','7678132','Dama St'),('Buttery','7023421','College St');
+Query OK, 4 rows affected (0.07 sec)
+ecords: 4  Duplicates: 0  Warnings: 0
+
+# Creating Tables SANDWICHES with 4 columns Location,Bread,Filling & Price.
+
+ mysql> CREATE Table SANDWICHES
+    ->  (Location VARCHAR(255),Bread VARCHAR(255),Filling VARCHAR(255),Price VARCHAR(255));
+Query OK, 0 rows affected (0.47 sec)
+
+
+
+mysql> INSERT INTO SANDWICHES
+    ->      VALUES('Lincoln','Rye','Ham','1.25'),("O'Neill's",'White','Cheese','1.20'),("O'Neill's",'Whole','Ham','1.25'),
+    ->      ('OLD Nag','Rye','Beef','1.35'),('Buttery','White','Cheese','1.00'),("O'Neill's",'White','Turkey','1.35'),
+    ->      ('Buttery','White','Ham','1.10'),('Lincoln','Rye','Beef','1.35'),('Lincoln','White','Ham','1.30'),('Old Nag','Rye','Ham','1.40');
+Query OK, 10 rows affected (0.07 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Tastes;
++-------+---------+
+| NAME  | FILLING |
++-------+---------+
+| Brown | Turkey  |
+| Brown | Beef    |
+| Brown | Ham     |
+| Jones | Cheese  |
+| Green | Beef    |
+| Green | Turkey  |
+| Green | Cheese  |
++-------+---------+
+7 rows in set (0.00 sec)
+
+
+mysql> SELECT * FROM Locations;
++-----------+---------+---------------+
+| LNAME     | PHONE   | ADDRESS       |
++-----------+---------+---------------+
+| Lincoln   | 6834523 | Lincoln Place |
+| O'Neill's | 6742134 | Pearse St     |
+| Old Nag   | 7678132 | Dama St       |
+| Buttery   | 7023421 | College St    |
++-----------+---------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Sandwiches;
++-----------+-------+---------+-------+
+| Location  | Bread | Filling | Price |
++-----------+-------+---------+-------+
+| Lincoln   | Rye   | Ham     | 1.25  |
+| O'Neill's | White | Cheese  | 1.20  |
+| O'Neill's | Whole | Ham     | 1.25  |
+| OLD Nag   | Rye   | Beef    | 1.35  |
+| Buttery   | White | Cheese  | 1.00  |
+| O'Neill's | White | Turkey  | 1.35  |
+| Buttery   | White | Ham     | 1.10  |
+| Lincoln   | Rye   | Beef    | 1.35  |
+| Lincoln   | White | Ham     | 1.30  |
+| Old Nag   | Rye   | Ham     | 1.40  |
++-----------+-------+---------+-------+
+10 rows in set (0.00 sec)
+
+
+
+
+(i) Places where Jones can eat ( using a nested subquery )
+
+mysql> SELECT Location FROM SANDWICHES WHERE Filling IN (SELECT Filling FROM TASTES WHERE Name='Jones');
++-----------+
+| Location  |
++-----------+
+| O'Neill's |
+| Buttery   |
++-----------+
+2 rows in set (0.00 sec)
+
+(ii) Places where Jones can eat (without using a nested subquery)
+
+mysql> SELECT SANDWICHES.Location FROM SANDWICHES,TASTES
+    -> WHERE SANDWICHES.Filling=TASTES.Filling
+    -> AND TASTES.Name='Jones';
++-----------+
+| Location  |
++-----------+
+| O'Neill's |
+| Buttery   |
++-----------+
+2 rows in set (0.00 sec)
+
+(iii)
+mysql> SELECT SANDWICHES.location, count(distinct(TASTES.name)) as People from TASTES, SANDWICHES
+    -> WHERE TASTES.filling = SANDWICHES.filling group by SANDWICHES.location;
++-----------+--------+
+| location  | People |
++-----------+--------+
+| Buttery   |      3 |
+| Lincoln   |      2 |
+| O'Neill's |      3 |
+| OLD Nag   |      2 |
++-----------+--------+
+4 rows in set (0.00 sec)
+   
+
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
