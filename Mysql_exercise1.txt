@@ -1,12 +1,12 @@
 # Creating a table Branch with 3 columns BCode, Librarian & Address
 
-mysql> CREATE TABLE Branch
-    -> (
-    -> BCode VARCHAR(255),
-    -> Librarian VARCHAR(255),
-    -> Address VARCHAR(255)
-    -> );
-Query OK, 0 rows affected (0.35 sec)
+mysql>     CREATE TABLE Branch
+    ->     (
+    ->     BCode VARCHAR(255),
+    ->     Librarian VARCHAR(255),
+    ->     Address VARCHAR(255)
+    ->     );
+Query OK, 0 rows affected (0.31 sec)
 
 # Insert values into Table Branch
 
@@ -15,7 +15,7 @@ mysql> INSERT INTO Branch
     -> VALUES('B1','John Smith','2 Anglesea rd'),
     -> ('B2','Mary Jones','34 Pearse St'),
     -> ('B3','Francis Owens','Grange X');
-Query OK, 3 rows affected (0.12 sec)
+Query OK, 3 rows affected (0.08 sec)
 Records: 3  Duplicates: 0  Warnings: 0
 
 
@@ -34,7 +34,7 @@ mysql> SELECT * FROM Branch;
 
 mysql> CREATE TABLE Titles
     -> (Title VARCHAR(255),Author VARCHAR(255),Publisher VARCHAR(255));
-Query OK, 0 rows affected (0.29 sec)
+Query OK, 0 rows affected (0.32 sec)
 
 mysql> DESC Titles;
 +-----------+--------------+------+-----+---------+-------+
@@ -49,13 +49,13 @@ mysql> DESC Titles;
 # Insert values in table Titles
 
 mysql> INSERT INTO Titles
-    ->      (Title,Author,Publisher)
-    ->      VALUES('Susannah','Ann Brown','Macmillan'),
-    ->      ('How to Fish','Amy Fly','Stop Press'),
-    ->      ('A History of Dublin','David Little','Wiley'),
-    ->      ('Computers','Blaise Pascal','Applewoods'),
-    ->      ('The Wife','Ann Brown','Macmillan');
-Query OK, 5 rows affected (0.09 sec)
+    ->     (Title,Author,Publisher)
+    ->     VALUES('Susannah','Ann Brown','Macmillan'),
+    ->     ('How to Fish','Amy Fly','Stop Press'),
+    ->     ('A History of Dublin','David Little','Wiley'),
+    ->     ('Computers','Blaise Pascal','Applewoods'),
+    ->     ('The Wife','Ann Brown','Macmillan');
+Query OK, 5 rows affected (0.03 sec)
 Records: 5  Duplicates: 0  Warnings: 0
 
 
@@ -75,22 +75,18 @@ mysql> SELECT * FROM Titles;
 
 # Creating table Holdings with 3 columns Branch,Title & #Copies
 
-mysql>  CREATE TABLE Holdings
-    ->  (Branch VARCHAR(255),Title VARCHAR(255),`#copies` VARCHAR(255));
-Query OK, 0 rows affected (0.34 sec)
-
-mysql>  CREATE TABLE Holdings
-    ->  (Branch VARCHAR(255),Title VARCHAR(255),`#copies` VARCHAR(255));
-Query OK, 0 rows affected (0.34 sec)
+mysql> CREATE TABLE Holdings
+    ->     (Branch VARCHAR(255),Title VARCHAR(255),`#copies` VARCHAR(255));
+Query OK, 0 rows affected (0.31 sec)
 
 
 # Insert values in Holdings branch
 
 mysql> Insert into Holdings
-    -> (Branch,Title,`#copies`)
-    -> VALUES('B1','Susannah',3),('B1','How to Fish',2),('B1','A History of Dublin',1),('B2','How to Fish',4),('B2','Computers',2),
-    -> ('B2','The Wife',3),('B3','A History of Dublin',1),('B3','Computers',4),('B3','Susannah',3),('B3','The Wife',1);
-Query OK, 10 rows affected (0.17 sec)
+    ->     (Branch,Title,`#copies`)
+    ->     VALUES('B1','Susannah',3),('B1','How to Fish',2),('B1','A History of Dublin',1),('B2','How to Fish',4),('B2','Computers',2),
+    ->     ('B2','The Wife',3),('B3','A History of Dublin',1),('B3','Computers',4),('B3','Susannah',3),('B3','The Wife',1);
+Query OK, 10 rows affected (0.06 sec)
 Records: 10  Duplicates: 0  Warnings: 0
 
 
@@ -153,13 +149,15 @@ mysql> SELECT DISTINCT Branch FROM Holdings
 
 (iv) The total no of books held at each branch
 
-mysql> SELECT SUM(`#copies`) AS Books FROM Holdings;
-+-------+
-| Books |
-+-------+
-|    24 |
-+-------+
-1 row in set (0.00 sec)
+mysql> SELECT DISTINCT(Branch), SUM(`#Copies`) AS Books FROM Holdings Group By Branch;
++--------+-------+
+| Branch | Books |
++--------+-------+
+| B1     |     6 |
+| B2     |     9 |
+| B3     |     9 |
++--------+-------+
+3 rows in set (0.02 sec)
 
 # Creating Table Tastes with 2 columns Name & Filling
 
@@ -285,58 +283,3 @@ mysql> SELECT SANDWICHES.location, count(distinct(TASTES.name)) as People from T
 +-----------+--------+
 4 rows in set (0.00 sec)
    
-
-
-     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
